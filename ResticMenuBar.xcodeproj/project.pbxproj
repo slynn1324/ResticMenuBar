@@ -6,8 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CAEC14502D0F583B0059A8C6 /* Puppy in Frameworks */ = {isa = PBXBuildFile; productRef = CAEC144F2D0F583B0059A8C6 /* Puppy */; };
+		CAEC14542D0F6BB80059A8C6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CAEC14532D0F6BB80059A8C6 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		CAEC143A2D0CF9080059A8C6 /* ResticMenuBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResticMenuBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAEC14532D0F6BB80059A8C6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAEC14502D0F583B0059A8C6 /* Puppy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,6 +39,7 @@
 		CAEC14312D0CF9080059A8C6 = {
 			isa = PBXGroup;
 			children = (
+				CAEC14532D0F6BB80059A8C6 /* README.md */,
 				CAEC143C2D0CF9080059A8C6 /* ResticMenuBar */,
 				CAEC143B2D0CF9080059A8C6 /* Products */,
 			);
@@ -65,6 +73,7 @@
 			);
 			name = ResticMenuBar;
 			packageProductDependencies = (
+				CAEC144F2D0F583B0059A8C6 /* Puppy */,
 			);
 			productName = ResticMenuBar;
 			productReference = CAEC143A2D0CF9080059A8C6 /* ResticMenuBar.app */;
@@ -94,6 +103,9 @@
 			);
 			mainGroup = CAEC14312D0CF9080059A8C6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CAEC144E2D0F583B0059A8C6 /* XCRemoteSwiftPackageReference "Puppy" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CAEC143B2D0CF9080059A8C6 /* Products */;
 			projectDirPath = "";
@@ -109,6 +121,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAEC14542D0F6BB80059A8C6 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,12 +257,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = ResticMenuBar/ResticMenuBar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ResticMenuBar/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -281,12 +297,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = ResticMenuBar/ResticMenuBar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ResticMenuBar/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -335,6 +354,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CAEC144E2D0F583B0059A8C6 /* XCRemoteSwiftPackageReference "Puppy" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sushichop/Puppy.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CAEC144F2D0F583B0059A8C6 /* Puppy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAEC144E2D0F583B0059A8C6 /* XCRemoteSwiftPackageReference "Puppy" */;
+			productName = Puppy;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CAEC14322D0CF9080059A8C6 /* Project object */;
 }
