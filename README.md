@@ -15,6 +15,10 @@ And I _sort of_ learned something by hacking my way through this.
 
 Alternatively, I've just setup cron to run a backup script -- like I do on my Linux machines -- but it doesn't give good visualization without external monitoring, and requires you to grant permissions to `cron` which also feels weird. 
 
+## Install
+
+I'm not going to package this and release binaries, as I do not have an Apple Developer subscription to sign or release proper binaries.  Clone the project, open it in xcode, and build your own release bundle.  Change it up to customize what it does while you're at it... it's one source file.
+
 ## Setup
 
 On first launch, the application will create the folder ~/Library/Application Support/ResticMenuBar.  The folder can be opened via the menu item. 
