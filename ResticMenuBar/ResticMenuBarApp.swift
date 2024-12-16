@@ -69,7 +69,6 @@ struct ResticMenuBarApp: App {
     } (NSImage(named: "Umbrella Alert Template")!))
     
     let timer = DispatchSource.makeTimerSource(queue:DispatchQueue.global(qos:.background))
-    
 
     @State var initialized: Bool = false
     @State var runState: RunState = RunState.idle
@@ -89,36 +88,6 @@ struct ResticMenuBarApp: App {
                 runState = .setup
             }
             
-            // create the tail.sh script
-            if !FileManager.default.fileExists(atPath: tailScript.path){
-                
-                let tailScriptContent = """
-                #!/bin/sh
-
-                trap cleanup INT
-
-                cleanup() {
-                    echo "bye"
-                    exit
-                }
-
-                export NO_ARCHEY=1
-
-                tail -n500 -f "\(tailScript.path(percentEncoded: false))"
-
-                exit
-                """
-                
-                FileManager.default.createFile(atPath: runScript.path, contents: tailScriptContent.data(using: .utf8))
-                
-                // make the run script executable
-                let setExecutableProcess = Process()
-                setExecutableProcess.executableURL = URL(fileURLWithPath: "/bin/chmod")
-                setExecutableProcess.arguments = ["+x", tailScript.path(percentEncoded: false)]
-                try setExecutableProcess.run()
-                setExecutableProcess.waitUntilExit()
-                
-            }
         } catch {
             log.error(error.localizedDescription)
         }
@@ -242,6 +211,20 @@ struct ResticMenuBarApp: App {
             case .setup: return "Setup run.sh in Support Folder"
         }
     }
+    
+    func tailLog() {
+        // this will prompt that it wants to open terminal, but it's alot easier that implemetning a full view window
+        // and re-implementing or piping 'tail'
+        do {
+            let tailProcess = Process()
+            tailProcess.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
+            tailProcess.arguments = ["-e", "tell app \"Terminal\" to do script \"trap exit INT; tail -n500 -f \\\"$HOME/Library/Application Support/ResticMenuBar/log.txt\\\"; exit\""]
+            tailProcess.standardOutput = nil
+            try tailProcess.run()
+        } catch {
+            log.error("Error launching log tail \(error.localizedDescription)")
+        }
+    }
      
     // need a reference to the scenePhase so we can watch for it to change to detect app launch
     @Environment(\.scenePhase) private var scenePhase
@@ -263,9 +246,7 @@ struct ResticMenuBarApp: App {
                 NSWorkspace.shared.open(appSupportDir)
             }
             Button("View Log"){
-                let appUrl = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal")!
-                let commandUrl = appSupportDir.appendingPathComponent("tail.sh")
-                NSWorkspace.shared.open([commandUrl], withApplicationAt: appUrl, configuration: NSWorkspace.OpenConfiguration())
+                tailLog()
             }
             Divider()
             Button("Quit"){
@@ -299,9 +280,6 @@ struct ResticMenuBarApp: App {
             
     }
 }
-
-
-
 
 
 /* unused bits
