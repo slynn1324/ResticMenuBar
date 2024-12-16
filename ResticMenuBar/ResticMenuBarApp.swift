@@ -218,7 +218,7 @@ struct ResticMenuBarApp: App {
         do {
             let tailProcess = Process()
             tailProcess.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
-            tailProcess.arguments = ["-e", "tell app \"Terminal\" to do script \"trap exit INT; tail -n500 -f \\\"$HOME/Library/Application Support/ResticMenuBar/log.txt\\\"; exit\""]
+            tailProcess.arguments = ["-e", "tell application \"Terminal\" to activate", "-e", "tell app \"Terminal\" to do script \"trap exit INT; tail -n500 -f \\\"$HOME/Library/Application Support/ResticMenuBar/log.txt\\\"; exit\""]
             tailProcess.standardOutput = nil
             try tailProcess.run()
         } catch {
