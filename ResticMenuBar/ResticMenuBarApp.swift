@@ -40,6 +40,7 @@ struct ResticMenuBarApp: App {
     
     let appSupportDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent(APP_NAME)
     let runScript = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent(APP_NAME).appendingPathComponent("run.sh")
+    let tailScript = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent(APP_NAME).appendingPathComponent("tail.sh")
     
     var log = Puppy(loggers: [try! FileRotationLogger("net.quikstorm.ResticMenuBar.filerotation",
                                                       logFormat: LogFormatter(),
@@ -85,8 +86,37 @@ struct ResticMenuBarApp: App {
             
             // create the run script
             if !FileManager.default.fileExists(atPath: runScript.path){
-
                 runState = .setup
+            }
+            
+            // create the tail.sh script
+            if !FileManager.default.fileExists(atPath: tailScript.path){
+                
+                let tailScriptContent = """
+                #!/bin/sh
+
+                trap cleanup INT
+
+                cleanup() {
+                    echo "bye"
+                    exit
+                }
+
+                export NO_ARCHEY=1
+
+                tail -n500 -f "\(tailScript.path(percentEncoded: false))"
+
+                exit
+                """
+                
+                FileManager.default.createFile(atPath: runScript.path, contents: tailScriptContent.data(using: .utf8))
+                
+                // make the run script executable
+                let setExecutableProcess = Process()
+                setExecutableProcess.executableURL = URL(fileURLWithPath: "/bin/chmod")
+                setExecutableProcess.arguments = ["+x", tailScript.path(percentEncoded: false)]
+                try setExecutableProcess.run()
+                setExecutableProcess.waitUntilExit()
                 
             }
         } catch {
@@ -231,6 +261,11 @@ struct ResticMenuBarApp: App {
             Divider()
             Button("Open Support Folder"){
                 NSWorkspace.shared.open(appSupportDir)
+            }
+            Button("View Log"){
+                let appUrl = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal")!
+                let commandUrl = appSupportDir.appendingPathComponent("tail.sh")
+                NSWorkspace.shared.open([commandUrl], withApplicationAt: appUrl, configuration: NSWorkspace.OpenConfiguration())
             }
             Divider()
             Button("Quit"){
